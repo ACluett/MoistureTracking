@@ -2,8 +2,10 @@
 
 clear
 
+cd '/Users/allisoncluett/Dropbox/GitHub/MoistureTracking'
+
 % Set location HERE and file names will change accordingly throughout
-location = "KANG";
+location = "THULE";
 
 if location == 'KANG'
     
@@ -37,28 +39,29 @@ else if location  == 'SUAQ'
 end
 
 
-%% Read in neccessary files (user must change path names)
+%% Read in neccessary files
+
 
 % Load tracked evaporation data
-E_track_file = strcat("/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Raw_Data/",location,"_evaporation_tracking_data/E_track_2layers_sigma_continental2014-1979.mat");
+E_track_file = strcat(location,"_evaporation_tracking_data/E_track_2layers_sigma_continental2014-1979.mat");
 load(E_track_file);
 
 % Load mask file of sink region
-region_file = strcat("/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Raw_Data/",location,"_region_grid.mat");
+region_file = strcat(location,"_region_grid.mat");
 load(region_file);
 
 % Load color scheme for plotting maps
-load("/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Raw_Data/20200121_RevisedColormap.mat");
+load("20200121_RevisedColormap.mat");
 
 % Load spatial data
-load("/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Raw_Data/Grid.mat");
+load("Grid.mat");
 
 % Load custom region masks
-load("/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Raw_Data/Custom_region_masks.mat");
+load("Custom_region_masks.mat");
 
 % Load other reanalysis and GHCN climate data
-load("/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Reanalysis_Temp/ERA-Int_Temp_Formatted.mat");
-GHCN_All = readtable("/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Raw_Data/GHCN.csv");
+load("ERA-Int_Temp_Formatted.mat");
+GHCN_All = readtable("GHCN.csv");
 
 % Calculate area of sink region (area grid is in m2)
 region_area = sum(sum(Region .* full_area_grid));
@@ -316,9 +319,9 @@ plotm(coastlat,coastlon, 'k')
 
 axis off
 
-set(gcf,'PaperUnits','inches','PaperPosition',[0 0 4 3])  
-plot0=strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Annual_Avg/',datestr(now, 'yyyy-mm-dd'),location,'Annual_Avg.png');
-saveas(gcf,plot0)
+% set(gcf,'PaperUnits','inches','PaperPosition',[0 0 4 3])  
+% plot0=strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Annual_Avg/',datestr(now, 'yyyy-mm-dd'),location,'Annual_Avg.png');
+% saveas(gcf,plot0)
 %To export illustrator editable fig: need to manually change file name
 %print -painters -depsc annualfractions_KANG
 
@@ -504,8 +507,8 @@ legend('Other', 'North American: North', 'North America: North Central', 'North 
      'Arctic Ocean', 'GIN Seas', 'Canadian Arctic', 'Baffin Bay', 'Labrador Sea', 'Atlantic: North', ...
          'Atlantic: Central', 'Atlantic: South', 'Pacific: North', 'Pacific: Central', 'Pacific: South')
 
-plot1=strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Sector_Division/',datestr(now, 'yyyy-mm-dd'),location,'SectorSums.svg');
-saveas(gcf,plot1)
+% plot1=strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Sector_Division/',datestr(now, 'yyyy-mm-dd'),location,'SectorSums.svg');
+% saveas(gcf,plot1)
 
 %% Plot monthly average regional percent bar chart
 
@@ -579,8 +582,8 @@ plot2=strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moistur
 saveas(gcf,plot2)
 
 %Save matrix of monthly region percents
-data1 = strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Sector_Division/',datestr(now, 'yyyy-mm-dd'),location,'SectorPercents.mat')
-save(data1, 'monthly_region_percent_avgs');
+% data1 = strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Sector_Division/',datestr(now, 'yyyy-mm-dd'),location,'SectorPercents.mat')
+% save(data1, 'monthly_region_percent_avgs');
 
 %% Make matrix of distances of grid cell center to target location
 
@@ -699,6 +702,7 @@ hold off
 xlim([0 13])
 ylim([30 60])
 xlabel('Month')
+ylabel('Latitude (°N)')
 
 plot6=strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Transport_Dist/',datestr(now, 'yyyy-mm-dd'),location,'AvgTransportDistStd.eps');
 saveas(gcf,plot6)
@@ -755,9 +759,7 @@ for Midx = 1:12
         SST_slice = squeeze(SST(Yidx, Midx,:,:));
         Area_slice_sink = full_area_grid .* Region;
         slice_avg_T2m_sink(Yidx, Midx) = sum((sum(Area_slice_sink .* T2m_slice)))./ region_area;
-        slice_avg_T2m_instrumental_sink(Yidx, Midx) = sum(sum(StationRegion .* T2m_slice));
         slice_avg_D2m_sink(Yidx, Midx) = sum((sum(Area_slice_sink .* D2m_slice)))./ region_area;
-        slice_avg_D2m_instrumental_sink(Yidx, Midx) = sum(sum(StationRegion .* D2m_slice));
         T2m_slice_fixedseason = squeeze(squeeze(mean(mean(T2m(:,:,:,:)))));
         
         Etrack_slice_sum = sum(sum(Etrack_slice));
@@ -924,6 +926,7 @@ hold off
 
 ylim([-50 30])
 xlim([0 13])
+ylabel('Temp (°C)')
 
 subplot(3,1,2)
 hold on
@@ -936,6 +939,7 @@ hold off
 
 xlim([0 13])
 ylim([0 1])
+ylabel('fm')
 
 subplot(3,1,3)
 
@@ -944,6 +948,7 @@ plot(d2Hrf_1, 'r')
 plot(d2Hrf_2, 'k')
 plot(d2Hrf_3a, '-b')
 plot(d2Hrf_3b, '--b')
+ylabel('d2H Precip (? VSMOW)')
 
 hold off
 
@@ -954,12 +959,12 @@ lgd.TextColor = 'k';
 legend('Location','southeast');
 lgd.NumColumns = 2;
 ldg.EdgeColor = 'k';
-legend('Scenario 1: Fixed Source Annual T0', 'Scenario 2: Seasonal Fixed Source T0', 'Scenario 3a: Moving Source Seasonal T0 Constant Vapor', 'Scenario 3b: latitudinal seasonal oceanic vapor change', 'Scenario 3c: oceanic continental vapor')
+legend('Scenario 1: Fixed Source Annual T0', 'Scenario 2: Seasonal Fixed Source T0', 'Scenario 3a: Moving Source Seasonal T0 Constant Vapor', 'Scenario 3b: latitudinal seasonal oceanic vapor change')
 
 hold off
 
-plot9=strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/precip_Validation/',datestr(now, 'yyyy-mm-dd'),location,'RayleighSimulation_TfGHCN_DewpointCrxn.eps');
-saveas(gcf,plot9)
+% plot9=strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/precip_Validation/',datestr(now, 'yyyy-mm-dd'),location,'RayleighSimulation_TfGHCN_DewpointCrxn.eps');
+% saveas(gcf,plot9)
 
 
 
