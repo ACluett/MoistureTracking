@@ -1,4 +1,16 @@
-This folder contains  files for analysis of tracked evaporation data as presented in the manuscript "Seasonal Variations in Moisture Origin Explain Spatial Gradients in Precipitation Isotope Seasonality on Coastal Western Greenland" by A. A. Cluett, E.K. Thomas, S. M. Evans, and P. W. Keys.
+This folder contains code for analysis of tracked evaporation data as presented in the manuscript "Seasonal Variations in Moisture Origin Explain Spatial Gradients in Precipitation Isotope Seasonality on Coastal Western Greenland" by A. A. Cluett, E.K. Thomas, S. M. Evans, and P. W. Keys.
 
-Tracked evaporation data files are archived here:
+PrecipitationshedAnalysis_20200305.m contains all manuscript analyses.
+
+KANG_region_grid.mat, SUAQ_region_grid.mat, and THULE_region_grid.mat are masks of the sink regions.
+
+Custom_region_masks.mat contains masks to classify source regions.
+
+Grid.mat contains spatial reference data for tracked evaporation data files.
+
+GHCN.csv contains climate data accessed from the NOAA Global Historical Climatology Network.
+
+Tracked evaporation data files are archived separately here:
+
+
 
