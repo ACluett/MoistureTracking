@@ -59,7 +59,7 @@ load("Grid.mat");
 % Load custom region masks
 load("Custom_region_masks.mat");
 
-% Load other reanalysis and GHCN climate data
+% Load reanalysis temperature and/or table of GHCN climate data
 load("ERA-Int_Temp_Formatted.mat");
 GHCN_All = readtable("GHCN.csv");
 
@@ -702,7 +702,7 @@ hold off
 xlim([0 13])
 ylim([30 60])
 xlabel('Month')
-ylabel('Latitude (°N)')
+ylabel('Latitude (Â°N)')
 
 plot6=strcat('/Users/allisoncluett/Dropbox/UB/Research/Dissertation/Ch.2 Moisture Variability/Precipitationsheds/Transport_Dist/',datestr(now, 'yyyy-mm-dd'),location,'AvgTransportDistStd.eps');
 saveas(gcf,plot6)
@@ -926,7 +926,7 @@ hold off
 
 ylim([-50 30])
 xlim([0 13])
-ylabel('Temp (°C)')
+ylabel('Temp (Â°C)')
 
 subplot(3,1,2)
 hold on
