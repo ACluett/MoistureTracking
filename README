@@ -8,8 +8,6 @@ Custom_region_masks.mat contains masks to classify source regions.
 
 Grid.mat contains spatial reference data for tracked evaporation data files.
 
-GHCN.csv contains climate data accessed from the NOAA Global Historical Climatology Network.
-
 Tracked evaporation data files are archived on figshare but are embargoed prior to publication.
 Cluett, Allison (2020): READ ME. figshare. Online resource. https://doi.org/10.6084/m9.figshare.11977227.v2
 
